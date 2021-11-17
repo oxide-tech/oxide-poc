@@ -1,4 +1,5 @@
 use std::{result, io};
+use std::sync::{Arc, Mutex};
 
 use tokio::net::TcpStream;
 use tokio::io::{AsyncReadExt, AsyncWriteExt, BufWriter};
@@ -7,8 +8,10 @@ use bytes::BytesMut;
 
 use serde_json;
 
-use crate::payload::PeerMessage;
-
+use crate::{
+    payload::PeerMessage,
+    protocol::pool::PeersPool
+};
 
 // Represents a connected peer to the network
 pub struct SocketConnection {
@@ -53,18 +56,34 @@ impl SocketConnection {
                     self.buffer.clear();
                     Ok(Some(payload))
                 },
-                None => Ok(None)
+                None => {
+                    self.buffer.clear();
+                    Ok(None)
+                }
             }
         }
     }
 
-    // pub async fn write_payload(&mut self, payload: &PeerMessage) -> io::Result<()> {
-    //     let package = self.pack_message(payload)?;
-    //     self.writer.write_all(&package[..]).await?;
+    pub async fn write_payload(&mut self, payload: &PeerMessage) -> io::Result<()> {
+        let package = self.pack_message(payload)?;
+        self.writer.write_all(&package[..]).await?;
 
-    //     println!("Sending package to node");
+        println!("Sending package to node");
 
-    //     Ok(())
-    // }
+        Ok(())
+    }
+
+    pub async fn handle_connection(
+        &mut self,
+        peers_connections: &Arc<Mutex<PeersPool>>
+    ) -> io::Result<()> {
+
+        loop {
+            let package = self.read_payload().await?;
+            match package {
+                
+            }
+        }
+    }
 
 }

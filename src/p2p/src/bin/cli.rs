@@ -1,11 +1,11 @@
 use std::net::TcpStream;
-use std::io::{Read, Write};
+use std::io::Write;
 use std::net;
 
 use serde_json;
 
 use p2p::payload::Meta;
-use p2p::payload::Ping;
+use p2p::payload::Payload;
 use p2p::payload::PeerMessage;
 
 fn main() {
@@ -15,7 +15,7 @@ fn main() {
             let port: u16 = 8080;
             println!("Connected to the oxide node");
             let meta = Meta {hostname: hostname, port: port};
-            let ping = Ping { msg: String::from("Hello from the client")};
+            let ping = Payload::Ping { msg: String::from("Hello from the client")};
             let payload = PeerMessage {
                 meta: meta,
                 payload: ping
@@ -24,7 +24,7 @@ fn main() {
             stream.write(&sera[..]).unwrap();
             println!("message sent");
         },
-        Err(er) => {
+        Err(_) => {
             println!("Failed to connect to oxide")
         }
     }

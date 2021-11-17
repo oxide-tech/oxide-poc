@@ -1,8 +1,9 @@
-use std::net::Ipv4Addr;
+use std::net::{Ipv4Addr, IpAddr, SocketAddr};
+use std::fmt::Debug;
+
 use serde::Serialize;
 use serde::Deserialize;
 
-use std::fmt::Debug;
 
 // #### HEADER ####
 
@@ -17,9 +18,11 @@ pub struct Meta {
 
 // #### MESSAGES TYPES ####
 
+
 #[derive(Serialize, Deserialize, Debug)]
-pub struct Ping {
-    pub msg: String
+pub enum Payload {
+    Ping { msg: String },
+    Block
 }
 
 // #### SEND MESSAGES ####
@@ -33,5 +36,5 @@ pub struct PeerMessage {
     pub meta: Meta,
 
     // The cargo of a message
-    pub payload: Ping
+    pub payload: Payload
 }
