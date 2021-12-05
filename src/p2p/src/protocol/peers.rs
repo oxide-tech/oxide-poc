@@ -1,4 +1,4 @@
 
-struct Protocol {
-    
+struct P2PProtocol {
+
 }

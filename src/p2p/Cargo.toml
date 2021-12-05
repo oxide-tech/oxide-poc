@@ -11,6 +11,10 @@ path = "src/bin/main.rs"
 name = "oxide-client"
 path = "src/bin/cli.rs"
 
+[[bin]]
+name = "oxide-test-chain"
+path = "src/bin/test_chain.rs"
+
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -19,3 +23,4 @@ tokio = { version = "1.13.0", features = ["full"] }
 bytes = "1.1.0"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0.1"
+chain = { path = "../chain" }

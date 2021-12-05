@@ -80,9 +80,7 @@ impl SocketConnection {
 
         loop {
             let package = self.read_payload().await?;
-            match package {
-                
-            }
+
         }
     }
 
