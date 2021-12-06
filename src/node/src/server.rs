@@ -57,7 +57,7 @@ impl Node {
     async fn accept_connection(&mut self) -> ServerResult<()>{
         loop {
             let (socket, _address) = self.listener.accept().await.unwrap();
-            let peers_pool = self.peers_pool.clone();
+            let peers_pool = Arc::clone(&self.peers_pool);
 
             tokio::spawn(async move {
                 println!("INFO > New socket connected -> {}", _address);
