@@ -1,0 +1,16 @@
+[package]
+name = "node"
+version = "0.1.0"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[[bin]]
+name = "oxide-run"
+path = "src/bin/run_node.rs"
+
+[dependencies]
+tokio = { version = "1.13.0", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0.1"
+bytes = "1.1.0"

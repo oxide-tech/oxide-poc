@@ -1,4 +1,0 @@
-
-struct P2PProtocol {
-
-}

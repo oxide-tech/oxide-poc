@@ -6,6 +6,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src/p2p/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/asdasda/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/wallet/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/client/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/node/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
