@@ -1,7 +1,6 @@
 [workspace]
 
 members = [
-    "src/p2p",
     "src/chain",
     "src/wallet",
     "src/node"

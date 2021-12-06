@@ -43,6 +43,10 @@ impl PeerPool {
         self.peers.entry(header.hostname.to_string()).or_insert(header);
     }
 
+    pub fn peer_exists(&mut self, header: &Header) -> bool {
+        self.peers.contains_key(&header.hostname.to_string())
+    }
+
     pub fn remove_peer(&mut self, hostname: Ipv4Addr) {
         self.peers.remove(&hostname.to_string());
     }

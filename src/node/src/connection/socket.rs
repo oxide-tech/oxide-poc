@@ -32,10 +32,15 @@ impl SocketConnection {
                 Some(msg) => {
                     self.buffer.clear();
                     let mut peers_pool_lock = peers_pool.lock().unwrap();
-                    peers_pool_lock.add_peer(msg.header);
+                    if !peers_pool_lock.peer_exists(&msg.header){
+                        peers_pool_lock.add_peer(msg.header);
+                    }
                     msg.payload
                 },
-                None => continue
+                None => {
+                    self.buffer.clear();
+                    continue
+                }
             };
 
             println!("Message received: {:?}", peer_message);
