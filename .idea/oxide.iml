@@ -8,6 +8,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/wallet/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/client/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/node/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/miner/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

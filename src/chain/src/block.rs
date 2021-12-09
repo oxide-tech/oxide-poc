@@ -2,73 +2,76 @@ use std::fmt::{Debug, Formatter, Result};
 
 use wallet::Transaction;
 
-use crypto_hash::{digest, Algorithm};
 use hex;
 
-use crate::utils::time_now;
+use crate::utils::{Hashable, time_now, Hash};
 use serde_json;
 
 
-
+#[derive(Clone)]
 pub struct Block {
-    pub number: i32,
-    pub timestamp: u64,
-    pub last_hash: i128,
-    pub hash: i128,
+    pub number: u32,
+    pub timestamp: u128,
+    pub last_hash: Hash,
+    pub block_hash: Hash,
     pub data: Vec<Transaction>,
-    pub validator: i128
+    pub nonce: u64
 }
 
 impl Block {
     pub fn new(
-        timestamp: u64,
-        last_hash: i128,
+        timestamp: u128,
+        last_hash: Vec<u8>,
         data: Vec<Transaction>,
-        number: i32,
-        validator: i128
-    ) -> Self{
+        number: u32,
+    ) -> Self {
         Block {
             number,
             timestamp,
             last_hash,
-            hash: 0 as i128,
+            block_hash: [0; 16].to_vec(),
             data,
-            validator
+            nonce: 0 as u64
         }
     }
 
     // Generates the first block in a blockchain
     pub fn genesis() -> Self {
         Block {
-            number: 0 as i32,
+            number: 0 as u32,
             timestamp: time_now(),
-            last_hash: 0 as i128,
+            last_hash: [0; 16].to_vec(),
             data: Vec::new(),
-            hash: 0 as i128,
-            validator: 0 as i128
+            block_hash: [0; 16].to_vec(),
+            nonce: 0 as u64
         }
     }
+}
 
-    pub fn hash(&self) -> Vec<u8> {
-        let mut block_info = Vec::new();
-
-        block_info.extend(self.last_hash.to_ne_bytes());
-        block_info.extend(&self.timestamp.to_ne_bytes());
+impl Hashable for Block {
+    fn bytes(&self) -> Vec<u8> {
+        let mut block_bytes = Vec::new();
+        block_bytes.extend(self.last_hash.to_vec());
+        block_bytes.extend(&self.timestamp.to_ne_bytes());
+        block_bytes.extend(&self.nonce.to_ne_bytes());
         for transaction in self.data.iter() {
             let transaction_bytes = serde_json::to_vec(transaction).unwrap();
-            block_info.extend(transaction_bytes.as_slice());
+            block_bytes.extend(transaction_bytes.as_slice());
         }
 
-        digest(Algorithm::SHA256, &block_info)
+        block_bytes
+
     }
+
 }
 
 impl Debug for Block {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result{
-        write!(f, "Block #{} time: {}, prev_hash: {}",
+        write!(f, "Block #{} time: {}, hash: {}, nonce: {}",
             &self.number,
             &self.timestamp,
-            &hex::encode(&self.last_hash.to_ne_bytes()),
+            &hex::encode(self.block_hash.as_slice()),
+            &self.nonce
         )
     }
 }

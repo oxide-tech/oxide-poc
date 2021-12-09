@@ -3,5 +3,6 @@
 members = [
     "src/chain",
     "src/wallet",
-    "src/node"
+    "src/node",
+    "src/miner"
 ]

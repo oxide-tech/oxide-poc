@@ -9,7 +9,7 @@ use serde::ser::{Serialize, Serializer, SerializeStruct};
 
 const TRANSACTION_FEE: u64 = 1 as u64;
 
-#[derive(serde::Serialize, Debug)]
+#[derive(serde::Serialize, Debug, Clone)]
 pub enum TransactionType {
     Stake,
     Validator,
@@ -17,7 +17,7 @@ pub enum TransactionType {
     Unsigned
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct TransactionInput {
     pub timestamp: u64,
     pub sender: PublicKey,
@@ -31,7 +31,7 @@ pub struct TransactionOutput {
     pub fee: u64
 }
 
-#[derive(serde::Serialize, Debug)]
+#[derive(serde::Serialize, Debug, Clone)]
 pub struct Transaction {
     pub id: Uuid,
     pub transaction_type: TransactionType,
